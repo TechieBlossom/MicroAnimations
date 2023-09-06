@@ -36,6 +36,7 @@ data class ArcData(
 fun AnimatedNPieChart(
     modifier: Modifier = Modifier,
     pieDataPoints: List<PieData>,
+    content: @Composable (modifier: Modifier) -> Unit,
 ) {
     val localModifier = modifier.size(200.dp)
     val total = pieDataPoints.fold(0f) { acc, pieData ->
@@ -65,10 +66,7 @@ fun AnimatedNPieChart(
         }
     }
 
-    Canvas(
-        modifier = localModifier
-            .scale(1f)
-    ) {
+    Canvas(modifier = localModifier.scale(1f)) {
         val stroke = Stroke(width = 20f)
 
         arcs.reversed().map {
@@ -81,35 +79,48 @@ fun AnimatedNPieChart(
             )
         }
     }
-    Row(
-        modifier = localModifier
-            .fillMaxSize()
-            .padding(16.dp)
-            .scale(1f),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-        pieDataPoints.map {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = it.label, fontWeight = FontWeight.W600)
-                Text(text = it.value.toString())
-            }
-        }
-    }
+    content(modifier = localModifier.scale(1f))
 }
 
 @Preview
 @Composable
 fun Preview_AnimatedNPieChart() {
+    val pieDataPoints = listOf(
+        PieData("Win", 20, color = Color.Black),
+        PieData("Draw", 10, color = Color.Black.copy(alpha = 0.5f)),
+        PieData("Loss", 10, color = Color.LightGray),
+    )
     MicroAnimationsTheme {
         Surface {
             AnimatedNPieChart(
                 modifier = Modifier.padding(32.dp),
-                pieDataPoints = listOf(
-                    PieData("Win", 20, color = Color.Black),
-                    PieData("Draw", 10, color = Color.Black.copy(alpha = 0.5f)),
-                    PieData("Loss", 10, color = Color.LightGray),
-                ),
+                pieDataPoints = pieDataPoints,
+                content = {
+                    Row(
+                        modifier = it
+                            .padding(32.dp)
+                            .fillMaxSize()
+                            .padding(16.dp)
+                            .scale(1f),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        pieDataPoints.map {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Text(text = it.label, fontWeight = FontWeight.W600)
+                                Text(text = it.value.toString())
+                            }
+                        }
+                    }
+//                    Icon(
+//                        imageVector = Icons.Default.Add, contentDescription = "",
+//                        modifier = it
+//                            .padding(32.dp)
+//                            .fillMaxSize()
+//                            .padding(16.dp)
+//                            .scale(1f),
+//                    )
+                }
             )
         }
     }
