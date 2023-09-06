@@ -31,8 +31,14 @@ fun NPieChartScreen(navController: NavController) {
         PieData("Draw", 10, color = Color.Black.copy(alpha = 0.5f)),
         PieData("Loss", 10, color = Color.LightGray),
     )
-    Scaffold(topBar = { TopAppBar(title = { Text(stringResource(id = R.string.n_pie_animation)) }) }) {
-        Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Scaffold(topBar = {
+        TopAppBar(title = {
+            Text(stringResource(id = R.string.n_pie_animation))
+        })
+    }) {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)) {
             AnimatedNPieChart(
                 modifier = Modifier
                     .padding(it)
@@ -51,7 +57,10 @@ fun NPieChartScreen(navController: NavController) {
                 ) {
                     pieDataPoints.map {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            androidx.compose.material.Text(text = it.label, fontWeight = FontWeight.W600)
+                            androidx.compose.material.Text(
+                                text = it.label,
+                                fontWeight = FontWeight.W600
+                            )
                             androidx.compose.material.Text(text = it.value.toString())
                         }
                     }
