@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Animations</string>
     <string name="n_pie_animation">N-Pie Chart Animation</string>
+    <string name="distributed_bar_graph">Distributed Bar Graph Animation</string>
+    <string name="gap_pie_chart">Gap Pie Chart Animation</string>
+    <string name="nightingale_chart">Nightingale Chart Animation</string>
 </resources>
